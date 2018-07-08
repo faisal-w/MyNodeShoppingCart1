@@ -14,4 +14,28 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/addNewProduct', function(req,res) {
+    res.render('shop/addProduct');
+});
+
+router.post('/addNewProduct', function(req,res) {
+    var product = new Product(req.body);
+
+    product.save(function(err){
+        if(err){
+            console.log(err);
+            res.render('shop/addProduct');
+        }else{
+            console.log("Successfully created a new product");
+            res.redirect('/');
+        }
+    });
+});
+
+router.get('/listproduct', function(req,res) {
+    Product.find(function(err, prods){
+        res.render('shop/listProduct', {title: 'All Products', products: prods});
+    });
+});
+
 module.exports = router;

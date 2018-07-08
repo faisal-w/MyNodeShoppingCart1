@@ -1,0 +1,18 @@
+<table border="1"> 
+    <tr>
+        <th width="50px">No</th>
+        <th>Product Title</th>
+        <th>Price</th>
+        <th>Description</th>
+    </tr>
+    {{# each products }}
+        {{# each this }}
+        <tr>
+            <td>{{this._id}}</td>
+            <td>{{ this.title }}</td>
+            <td>{{ this.price }}</td>
+            <td>{{ this.description }}</td>
+        </tr>
+        {{/each}}
+    {{/each}}
+</table>
