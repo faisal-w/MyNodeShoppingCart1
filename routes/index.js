@@ -38,4 +38,60 @@ router.get('/listproduct', function(req,res) {
     });
 });
 
+router.post('/delete/:id', function (req, res) {
+    Product.remove({ _id: req.params.id }, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Product deleted!");
+            res.redirect("/list");
+        }
+    });
+});
+
+router.get('/edit/:id', function (req, res) {
+    Product.findOne({ _id: req.params.id }).exec(function (err, prods) {
+        if (err) {
+            console.log("Error:", err);
+        } else {
+            res.render('shop/edit', { title: 'All Products', products: prods });
+        }
+    })
+})
+
+router.post('/updateProduct/:id', function (req, res) {
+    Product.findByIdAndUpdate(req.params.id,
+        {
+            $set:
+            {
+                imagePath: req.body.imagePath,
+                title: req.body.title,
+                description: req.body.description,
+                price: req.body.price
+            }
+        }, { new: true },
+        function (err, products) {
+            if (err) {
+                console.log(err);
+                res.render("shop/edit", { products: req.body });
+            }
+            res.redirect("/list");
+        });
+});
+
+router.get('/like/:id', function(req,res) {
+    Product.findByIdAndUpdate(req.params.id,
+        {
+            $inc:
+            { likes : 1 }
+        },
+        function(err, products) {
+            if(err){
+                console.log(err);
+                res.redirect("/");
+            }
+            res.redirect("/");
+        });
+});
+
 module.exports = router;
