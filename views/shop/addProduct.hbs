@@ -1,6 +1,6 @@
 <div>
        <h1>Create New Product</h1>
-       <form action="/addNewProduct" method="post">
+       <form action="/addNewProduct" enctype="multipart/form-data"  method="POST">
          <table>
            <tbody>
              <tr>
@@ -13,7 +13,7 @@
              </tr>
              <tr>
                <td>Image Path</td>
-               <td><input type="text" name="imagePath" /></td>
+               <td><input type="file" name="imagePath" /></td>
              </tr>
              <tr>
                <td>Price</td>
